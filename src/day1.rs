@@ -1,9 +1,6 @@
 use std::collections::HashMap;
 
-pub struct TwoLists {
-    list1 : Vec<u32>,
-    list2 : Vec<u32>,
-}
+type TwoLists = (Vec<u32>, Vec<u32>);
 
 fn count(list: &[u32]) -> HashMap<&u32, u32> {
     let mut counter = HashMap::new();
@@ -25,14 +22,14 @@ fn parse_input(input: &str) -> TwoLists {
         list1.push(ints.next().unwrap());
         list2.push(ints.next().unwrap());
     }
-    TwoLists { list1, list2 }
+    return (list1, list2);
 }
 
 #[aoc(day1, part1)]
 pub fn part1(input: &str) -> u32 {
     let lists = parse_input(input);
-    let mut list1 = lists.list1.clone();
-    let mut list2 = lists.list2.clone();
+    let mut list1 = lists.0.clone();
+    let mut list2 = lists.1.clone();
     list1.sort();
     list2.sort();
 
@@ -43,8 +40,8 @@ pub fn part1(input: &str) -> u32 {
 #[aoc(day1, part2)]
 pub fn part2(input: &str) -> u32 {
     let lists = parse_input(input);
-    let counter1 = count(&lists.list1);
-    let counter2 = count(&lists.list2);
+    let counter1 = count(&lists.0);
+    let counter2 = count(&lists.1);
     let mut sum = 0;
     for (k, v) in counter1 {
         let count2 = counter2.get(k).unwrap_or(&0);
